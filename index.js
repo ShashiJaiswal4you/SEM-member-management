@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname,"style")));
 app.use('/images', express.static('images'));
 app.use('/style', express.static('style'));
 
-const port = 8080;
+const port = 3000;
 
 app.listen(port,()=>{
     console.log(`Server started on ${port} :`);
