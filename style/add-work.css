@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: coral; */
+    background: linear-gradient(to left, orange, rgb(4, 172, 170));
+
+    padding: 15px;
+    border-radius: 0 0 8px 8px;
+}
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.name {
+    background-color: blanchedalmond;
+    border-radius:8px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+}
+.name a {
+    text-decoration: none;
+    color: black;
+}
+.name:hover{
+    color: white;
+    transform: scale(1.2);
+    background-color: #e74c3c; 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0.8; 
+    border-radius: 40px; 
+}
+.company {
+    /* background-color: blanchedalmond; */
+    border-radius:8px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 10px;
+}
+form {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+input {
+    margin-top: 15px;
+    height: 30px;
+    width: 30%;
+    border: solid black 2px;
+    border-radius: 8px;
+    padding: 8px;
+}
+button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+    border: solid black 2px;
+    background-color: aquamarine;
+    border-radius: 35px;
+    padding: 8px;
+    width: 30%;
+    font-weight: 600;
+}
+button:hover {
+    background:linear-gradient(to top, red, orange);
+    color: white;
+}
+
+
+
+
+.space {
+    height: 254px;
+}
+.footer {
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 15px;
+    color: white;
+    border-radius: 8px 8px 0 0 ;
+
+}

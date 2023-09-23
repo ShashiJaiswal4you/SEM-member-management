@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/details.css">
+    <title>Admin Dashboard</title>
+</head>
+<body style="background-color: whitesmoke;">
+    <div class="header">
+        <div class="company">
+            <h1>Sawariya Events Management Company</h1>
+        </div>
+        <div class="menu">
+            <div class="name">
+                <a href="/">Home</a>
+            </div>
+            <div class="name">
+                <a href="/admin-login">Admin Login</a>
+            </div>
+            <div class="name">
+                <a href="https://wa.me/916203932586" target="_blank">Contact Us</a>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="user-action">
+            <h2>Search user</h2>
+
+            <form class="work" id="search-form" method="GET">
+                <input type="text" name="input" id="input-field" placeholder="Enter user name" class="search">
+                <button class="remove">Search Now!</button>
+            </form>
+            
+            <p>Or</p>
+
+            <form action="/admin/dashboard/<%= name %>" class="work">
+                <button class="Show-all-users">Show all Users</button>
+            </form>
+        </div>
+        <div class="booking">
+            <h2>Users Bookings</h2>
+            <table>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>Phone No.</th>
+                    <th>Address</th>
+                    <th>Salary</th>
+                    <th colspan="2">Admin Action</th>
+                </tr>
+                <% for(user of users) { %>
+                    <tr>
+                        <td><%= user.name %></td>
+                        <td><%= user.email %></td>
+                        <td><%= user.phone %></td>
+                        <td><%= user.address %></td>
+                        <td><%= user.salary %></td>
+                        <td class="delete-div">
+                            <form action="/<%= user._id %>/Delete/<%= name %>">
+                                <button class="booking-btn-2">Delete User</button>
+                            </form>
+                        </td>
+                        <td class="delete-div">
+                            <form action="/<%= user._id %>/Details">
+                                <button class="booking-btn">View details</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+                
+            </table>
+        </div>
+    </div>
+    <div class="space">
+
+    </div>
+    <div class="footer">
+        <div class="about">
+            <h2>We are SEM Company</h2>
+        </div>
+        <div class="links">
+            <ul>
+                <li>About Us</li>
+                <li>Contact us</li>
+                <li>Privacy Policy</li>
+            </ul>
+        </div>
+        <div class="Contact">
+            <p>No. 6203932586</p>
+            <p>Email: Abhishek@gmail.com</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('search-form');
+            const inputField = document.getElementById('input-field');
+    
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+    
+                const inputValue = inputField.value;
+                const newAction = `/${inputValue}/search`;
+    
+                form.setAttribute('action', newAction);
+    
+                // Now you can submit the form if needed
+                form.submit();
+            });
+        });
+
+        // let confirmDelete = document.querySelector(".booking-btn-2");
+        // confirmDelete.addEventListener("click",()=>{
+        //     let promptValue = prompt("Are you sure? Type YES to delete or NO to do not delete");
+        //     // return promptValue;
+        // })
+    </script>
+    
+    
+</body>
+</html>

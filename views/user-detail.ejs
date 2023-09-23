@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/user-details.css">
+    <title>User Details</title>
+</head>
+<body>
+    <div class="header">
+        <div class="company">
+            <h1>Sawariya Events Management Company</h1>
+        </div>
+        <div class="menu">
+            <div class="name">
+                <a href="/">Home</a>
+            </div>
+            <div class="name">
+                <a href="/admin-login">Admin Login</a>
+            </div>
+            <div class="name">
+                <a href="https://wa.me/916203932586" target="_blank">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <th>Accessaries Name</th>
+            <th>Date</th>
+            <th>Place</th>
+        </tr>
+        <% for (detail of userDetails) { %>
+            <tr>
+                <td><%= detail.name %></td>
+                <td><%= detail.date %></td>
+                <td><%= detail.place %></td>
+            </tr>
+        <% } %>
+    </table>
+    <div class="space">
+
+    </div>
+    <div class="footer">
+        <div class="about">
+            <h2>We are SEM Company</h2>
+        </div>
+        <div class="links">
+            <ul>
+                <li>About Us</li>
+                <li>Contact us</li>
+                <li>Privacy Policy</li>
+            </ul>
+        </div>
+        <div class="Contact">
+            <p>No. 6203932586</p>
+            <p>Email: Abhishek@gmail.com</p>
+        </div>
+    </div>
+</body>
+</html>
