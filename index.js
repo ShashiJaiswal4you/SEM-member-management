@@ -6,6 +6,8 @@ const path = require("path");
 const User = require("./models/login.js");
 const Admin = require("./models/admin.js");
 const Work = require("./models/work.js");
+const NewUser = require("./models/register.js");
+const { on } = require("events");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -172,20 +174,22 @@ app.get("/:id/delete/:name", async (req, res)=>{
 app.get("/register",(req, res)=>{
     res.render("register.ejs");
 })
-app.post("/register/validation",(req, res)=>{
+app.post("/register/validation", async (req, res)=>{
     let {name, email, password, date, Aadhar_card, Pan_card, Profile_pic, terms_check, privacy_check } = req.body;
-    // if( (terms_check == true) || (privacy_check == true))
-    // {
-    //     let newUser = User.insertOne({
-    //         name: name,
-    //         email: email,
-    //         password: password,
-    //         date: date,
-    //         Aadhar_card: Aadhar_card, 
-    //         Pan_card: Pan_card, 
-    //         Profile_pic: Profile_pic
-    //     });
-    //     newUser.save();
-    // }
-    res.send("Registration Successfull");
+    if( (terms_check == "on") && (privacy_check == "on"))
+    {
+        let newUser = new NewUser({
+            name: name,
+            email: email,
+            password: password,
+            date: date,
+            aadhar_card: Aadhar_card, 
+            pan_card: Pan_card, 
+            profile_pic: Profile_pic
+        });
+        newUser.save();
+        res.send("Registration Successfull");
+    } else {
+        res.send("Registration Invalid! You have not checked privacy policy or terms and condition");
+    }
 })

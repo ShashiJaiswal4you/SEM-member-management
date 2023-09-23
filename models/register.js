@@ -9,19 +9,22 @@ const regSchema = new mongoose.Schema({
         type: String,
         default: "default@gmail.com"
     },
-    phone: {
-        type: Number,
-        default: 6203932587
-    },
-    address: {
+    password: {
         type: String,
-        default: "Katihar - sharifganj"
+        default: "password"
     },
-    salary: {
-        type: Number,
-        default: 10000
+    date: {
+        type: Date,
     },
-    password: String
+    aadhar_card: {
+        type: Buffer
+    },
+    pan_card: {
+        type: String
+    },
+    profile_pic: {
+        type: String
+    }
 });
 
 const NewUser = mongoose.model("NewUser", regSchema);
