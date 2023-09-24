@@ -18,12 +18,18 @@ const regSchema = new mongoose.Schema({
         type: Date,
     },
     aadhar_card: {
-        type: Buffer
+        type: String
     },
     pan_card: {
         type: String
     },
     profile_pic: {
+        type: String
+    },
+    phone: {
+        type: Number
+    }, 
+    address: {
         type: String
     }
 });

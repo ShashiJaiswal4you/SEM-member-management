@@ -14,6 +14,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,"style")));
+app.use(express.static(path.join(__dirname, 'Uploads')));
 app.use('/images', express.static('images'));
 app.use('/style', express.static('style'));
 
@@ -180,11 +181,11 @@ const upload = multer({
     storage: multer.diskStorage({
         destination: function(req, file, cb)
         {
-            cb(null,"C:\\Users\\Shashi bhushan kumar\\Videos\\Delta\\Abhishek\\SEM-member-management\\Uploads")
+            cb(null,"./Uploads")
         },
         filename:function(req, file, cb)
         {
-            // Generate a unique filename based on the original filename
+            // unique filename based on the original filename
             const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
             cb(null, file.fieldname + "_" + uniqueSuffix + ".jpg");
         },
@@ -196,13 +197,16 @@ const upload = multer({
 ]);
 
 app.post("/register/validation", upload, async (req, res)=>{
-    // Extract fields and uploaded files from req.body and req.files
-    const { name, email, password, date, terms_check, privacy_check } = req.body;
+    
+    const { name, phone, address, email, password, date, terms_check, privacy_check } = req.body;
     const { Aadhar_card, Pan_card, Profile_pic } = req.files;
+    console.log(password);
     if( (terms_check == "on") && (privacy_check == "on"))
     {
         let newUser = new NewUser({
             name: name,
+            phone:phone,
+            address: address,
             email: email,
             password: password,
             date: date,
@@ -211,7 +215,7 @@ app.post("/register/validation", upload, async (req, res)=>{
             profile_pic: Profile_pic[0].filename,
         });
         newUser.save();
-        res.send("Registration Successfull");
+        res.render("profile.ejs",{newUser});
     } else {
         res.send("Registration Invalid! You have not checked privacy policy or terms and condition");
     }
