@@ -21,7 +21,19 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 10000
     },
-    password: String
+    password: String,
+    aadhar_card: {
+        type: String,
+    },
+    pan_card: {
+        type: String,
+    },
+    profile_pic: {
+        type: String
+    },
+    id: {
+        type: String
+    }
 });
 
 const User = mongoose.model("User", userSchema);

@@ -109,12 +109,17 @@ app.post("/:id/login",  async (req, res)=>{
 app.get("/admin/dashboard/:id",async (req, res)=>{
     let {id} = req.params;
     let name = id;
+    let users;
+    let pending;
     await User.find().then((result)=>{
-        let users = result;
-        res.render("details.ejs",{users, name});
+        users = result;
     }).catch((err)=>{
         console.log(err);
     })
+    await NewUser.find().then((result)=>{
+        pending = result;
+    })
+    res.render("details.ejs",{users, pending, name});
 })
 
 app.get("/user/dashboard/:id/:name", async (req, res)=>{
@@ -214,9 +219,63 @@ app.post("/register/validation", upload, async (req, res)=>{
             pan_card: Pan_card[0].filename,
             profile_pic: Profile_pic[0].filename,
         });
-        newUser.save();
-        res.render("profile.ejs",{newUser});
+        await newUser.save();
+        res.render("image.ejs",{newUser});
     } else {
         res.send("Registration Invalid! You have not checked privacy policy or terms and condition");
     }
+})
+app.get("/success",(req, res)=>{
+    res.render("image.ejs");
+})
+app.get("/:id/approve", async (req, res)=>{
+    let {id} = req.params;
+    let newDetail;
+    await NewUser.findOne({_id:`${id}`}).then((result)=>{
+        newDetail = result;
+    })
+    console.log(newDetail);
+    let newuser = new User({
+        name: newDetail.name,
+        email: newDetail.email,
+        phone: newDetail.phone,
+        address: newDetail.address,
+        salary: 10000,
+        password: newDetail.password,
+        aadhar_card: newDetail.aadhar_card,
+        pan_card: newDetail.pan_card,
+        profile_pic: newDetail.profile_pic,
+        id: newDetail._id
+    })
+    await newuser.save();
+    await NewUser.deleteOne({_id:`${id}`}).then((result)=>{
+        console.log(result);
+        res.redirect("/admin/dashboard/@Abhishek")
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+app.get("/:id/reject",async (req, res)=>{
+    let {id} = req.params;
+    await NewUser.deleteOne({_id:`${id}`}).then((result)=>{
+        console.log(result);
+        res.redirect("/admin/dashboard/@Abhishek")
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+app.get("/:id/:img/image",async (req, res)=>{
+    let {id, img} = req.params;
+    await NewUser.findOne({_id:`${id}`}).then((result)=>{
+        let imageURL;
+        if (img === 'aadhar_card') {
+            imageURL = result.aadhar_card;
+        } else if (img === 'pan_card') {
+            imageURL = result.pan_card;
+        } else if (img === 'profile_pic') {
+            imageURL = result.profile_pic;
+        }
+        res.render("image.ejs",{imageURL})
+        console.log(imageURL);
+    })
 })

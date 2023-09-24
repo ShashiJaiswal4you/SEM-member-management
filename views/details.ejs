@@ -71,24 +71,58 @@
                 
             </table>
         </div>
-        <!-- <div class="pending-user">
-            <h2>Pending Users</h2>
-            <table>
+    </div>
+    <div class="pending-user">
+        <h2>Pending Users</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone No.</th>
+                <th>Address</th>
+                <th>Reg. Date</th>
+                <th>Aadhar Card</th>
+                <th>Pan Card</th>
+                <th>Profile Pic</th>
+                <th colspan="2">Admin Action</th>
+            </tr>
+            <% for(user of pending) { %>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone No.</th>
-                    <th>Address</th>
-                    <th>Reg. Date</th>
-                    <th>Aadhar Card</th>
-                    <th>Pan Card</th>
-                    <th>Profile Pic</th>
-                    <th colspan="2">Admin Action</th>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
+                    <td><%= user.address %></td>
+                    <td><%= user.date.toDateString().slice(3, 15) %></td>
+                    <td class="aadhar-div">
+                        <form action="/<%= user._id %>/aadhar_card/image/">
+                            <button class="booking-btn-2">View</button>
+                        </form>
+                    </td>
+                    <td class="pan-div">
+                        <form action="/<%= user._id %>/pan_card/image">
+                            <button class="booking-btn">View</button>
+                        </form>
+                    </td>
+                    <td class="profile-div">
+                        <form action="/<%= user._id %>/profile_pic/image">
+                            <button class="booking-btn">View</button>
+                        </form>
+                    </td>
+                    <td class="admin-div">
+                        <form action="/<%= user._id %>/approve">
+                            <button class="booking-btn">Approve</button>
+                        </form>
+                    </td>
+                    <td class="admin-div">
+                        <form action="/<%= user._id %>/reject">
+                            <button class="booking-btn">Reject</button>
+                        </form>
+                    </td>
                 </tr>
-        </div> -->
+            <% } %>
+        </table>
     </div>
     <div class="space">
-
     </div>
     <div class="footer">
         <div class="about">
@@ -131,7 +165,5 @@
         //     // return promptValue;
         // })
     </script>
-    
-    
 </body>
 </html>
