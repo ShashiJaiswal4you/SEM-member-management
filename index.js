@@ -8,6 +8,7 @@ const Admin = require("./models/admin.js");
 const Work = require("./models/work.js");
 const NewUser = require("./models/register.js");
 const { on } = require("events");
+const multer = require("multer");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -174,8 +175,30 @@ app.get("/:id/delete/:name", async (req, res)=>{
 app.get("/register",(req, res)=>{
     res.render("register.ejs");
 })
-app.post("/register/validation", async (req, res)=>{
-    let {name, email, password, date, Aadhar_card, Pan_card, Profile_pic, terms_check, privacy_check } = req.body;
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function(req, file, cb)
+        {
+            cb(null,"C:\\Users\\Shashi bhushan kumar\\Videos\\Delta\\Abhishek\\SEM-member-management\\Uploads")
+        },
+        filename:function(req, file, cb)
+        {
+            // Generate a unique filename based on the original filename
+            const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+            cb(null, file.fieldname + "_" + uniqueSuffix + ".jpg");
+        },
+    }),
+}).fields([
+    { name: "Aadhar_card", maxCount: 1 },
+    { name: "Pan_card", maxCount: 1 },
+    { name: "Profile_pic", maxCount: 1 },
+]);
+
+app.post("/register/validation", upload, async (req, res)=>{
+    // Extract fields and uploaded files from req.body and req.files
+    const { name, email, password, date, terms_check, privacy_check } = req.body;
+    const { Aadhar_card, Pan_card, Profile_pic } = req.files;
     if( (terms_check == "on") && (privacy_check == "on"))
     {
         let newUser = new NewUser({
@@ -183,9 +206,9 @@ app.post("/register/validation", async (req, res)=>{
             email: email,
             password: password,
             date: date,
-            aadhar_card: Aadhar_card, 
-            pan_card: Pan_card, 
-            profile_pic: Profile_pic
+            aadhar_card: Aadhar_card[0].filename,
+            pan_card: Pan_card[0].filename,
+            profile_pic: Profile_pic[0].filename,
         });
         newUser.save();
         res.send("Registration Successfull");

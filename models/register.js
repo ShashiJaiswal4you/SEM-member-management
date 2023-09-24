@@ -3,15 +3,16 @@ const { default: mongoose } = require("mongoose");
 const regSchema = new mongoose.Schema({
     name: {
         type: String,
-        default: "Not given"
+        required: true
     },
     email: {
         type: String,
-        default: "default@gmail.com"
+        required: true,
+        unique: true
     },
     password: {
         type: String,
-        default: "password"
+        required: true
     },
     date: {
         type: Date,
